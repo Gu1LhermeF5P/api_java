@@ -27,7 +27,6 @@ public class MotoController {
         return motoRepository.save(moto);
     }
 
-    // GARANTA QUE ESTE MÉTODO ESTEJA NO SEU ARQUIVO
     @PutMapping("/{placa}")
     @Transactional
     public ResponseEntity<Moto> atualizarMoto(@PathVariable String placa, @RequestBody Moto dadosAtualizados) {
@@ -47,5 +46,19 @@ public class MotoController {
         Moto motoSalva = motoRepository.save(motoExistente);
 
         return ResponseEntity.ok(motoSalva);
+    }
+
+    
+    @DeleteMapping("/{placa}")
+    @Transactional
+    public ResponseEntity<Void> deletarMoto(@PathVariable String placa) {
+        
+        if (motoRepository.findByPlaca(placa).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        motoRepository.deleteByPlaca(placa);
+      
+        return ResponseEntity.noContent().build();
     }
 }
