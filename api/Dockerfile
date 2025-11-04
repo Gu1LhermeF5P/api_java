@@ -1,25 +1,33 @@
-# Estágio 1: Build da Aplicação
-# Usa a imagem oficial do Maven com o Java 17 para construir o .jar
-FROM eclipse-temurin:17-jdk-jammy as builder
-WORKDIR /app
+# --- Estágio 1: "Build" (O Construtor) ---
+FROM eclipse-temurin:17-jdk-focal AS builder
+
+WORKDIR /workspace
+
 COPY .mvn/ .mvn
 COPY mvnw pom.xml ./
-# Baixa as dependências offline antes do build principal
+
+# 🚨 --- CORREÇÃO ADICIONADA AQUI --- 🚨
+# Dá permissão de execução ao script do Maven
+RUN chmod +x mvnw
+# ------------------------------------
+
+# Baixa as dependências
 RUN ./mvnw dependency:go-offline
+
+# Copia o código-fonte
 COPY src ./src
-# Comando para fazer o build do projeto e pular os testes (para deploy)
+
+# Constroi o JAR, pulando os testes
 RUN ./mvnw clean package -DskipTests
 
-# Estágio 2: Imagem Final de Produção
-# Usa uma imagem leve (JRE) apenas para rodar o app
-FROM eclipse-temurin:17-jre-jammy
+
+# --- Estágio 2: "Runtime" (A Imagem Final) ---
+FROM eclipse-temurin:17-jre-focal
+
 WORKDIR /app
-# Argumento para pegar o arquivo .jar criado no estágio de build
-ARG JAR_FILE=target/*.jar
-COPY --from=builder /app/${JAR_FILE} app.jar
 
-# Define a porta do servidor web
+# Copia o JAR construído no Estágio 1
+COPY --from=builder /workspace/target/api-0.0.1-SNAPSHOT.jar app.jar
+
 EXPOSE 8080
-
-# Comando para iniciar a aplicação Spring Boot
 ENTRYPOINT ["java", "-jar", "app.jar"]
