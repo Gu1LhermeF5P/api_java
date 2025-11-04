@@ -1,6 +1,6 @@
 # MotoScan API 🏍️
 
-Este repositório contém a API RESTful desenvolvida em Java com Spring Boot, que serve como backend para a aplicação mobile **[MotoScan](https://github.com/SeuUsuario/motoscan-mobile)**. *(<-- Troque pelo link do seu repositório do frontend)*
+Este repositório contém a API RESTful desenvolvida em Java com Spring Boot, que serve como backend para a aplicação mobile **[MotoScan](https://github.com/Gu1LhermeF5P/MottoScan)**. *(<-- Troque pelo link do seu repositório do frontend)*
 
 A API é responsável por gerenciar toda a lógica de negócio, autenticação de usuários e persistência de dados da frota de motocicletas.
 
