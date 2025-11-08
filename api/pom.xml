@@ -6,7 +6,8 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.5.7</version>
-		<relativePath/> </parent>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
 	<groupId>br.com.motoscan</groupId>
 	<artifactId>api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -59,10 +60,22 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		
+		<!-- 
+		  ==================================================================
+		  ==> CORREÇÃO: Força o uso do Flyway v9.22.3
+		  ==> A versão que o Spring estava usando (v11+) é muito nova
+		  ==> e não reconhece as versões 15.x ou 16.x do Postgres.
+		  ==================================================================
+		-->
 		<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
+			<version>9.22.3</version>
 		</dependency>
+		<!-- 
+		  ==================================================================
+		-->
 
 		<dependency>
 			<groupId>com.h2database</groupId>
