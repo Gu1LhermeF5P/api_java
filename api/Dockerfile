@@ -15,7 +15,5 @@ COPY --from=builder /workspace/target/api-0.0.1-SNAPSHOT.jar app.jar
 
 EXPOSE 8080
 
-# 🚨 --- CORREÇÃO AQUI --- 🚨
-# Adiciona o parâmetro "-Djava.net.preferIPv4Stack=true"
-# para forçar o Java a usar a rede IPv4 e encontrar o Supabase.
+
 ENTRYPOINT ["java", "-Djava.net.preferIPv4Stack=true", "-jar", "app.jar"]
